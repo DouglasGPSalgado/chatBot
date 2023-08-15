@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 app.post('/bot', async (req, res) => {
   const response = new MessagingResponse();
   const msg = response.message();
-  const message = await conversation.getMessages().items[5];
+  const message = req.body
   msg.body("Funcionou!");
   console.log(message);
   res.send(response.toString());
