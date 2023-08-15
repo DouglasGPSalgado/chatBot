@@ -1,7 +1,7 @@
 {
   "name": "whatsapp_bot",
   "version": "1.0.0",
-  "description": "SID - ACa1f9b3c502fb6823e83c4f77de48c922",
+  "description": "",
   "main": "index.js",
   "engines": {
     "node": "18"
