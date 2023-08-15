@@ -10,12 +10,12 @@ app.get('/', (req, res) => {
   res.send('Olá, mundo!');
 });
 
-app.post('/bot', (req, res) => {
+app.post('/bot', async (req, res) => {
   const response = new MessagingResponse();
   const msg = response.message();
-
+  const message = await conversation.getMessages().items[5];
   msg.body("Funcionou!");
-  
+  console.log(message);
   res.send(response.toString());
 });
 
