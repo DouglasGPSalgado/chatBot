@@ -1,34 +1,56 @@
+// Importa a classe MessagingResponse do módulo 'twilio.twiml'
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
-var name, cpf, cep, choice = null;
+// Define a variável de estado 'currentStep' como 'start' inicialmente
+var currentStep = 'start';
 
-function choices(req, res, next) {
+// Cria um objeto vazio 'collectedData' para armazenar as informações coletadas
+var collectedData = {};
+
+// Função para lidar com mensagens recebidas
+function handleMessages(req, res) {
+    // Cria uma nova instância de MessagingResponse
     const response = new MessagingResponse();
     const msg = response.message();
-    choice = req.body.Body
-    if (choice == 1) {
-        msg.body("Vamos nessa!");
-        res.send(response.toString());
 
+    // Remove espaços extras do corpo da mensagem recebida
+    const userInput = req.body.Body.trim();
 
-        choice = null;
-    } else if (choice == 2) {
-        msg.body("Obrigado pela atenção!");
-        res.send(response.toString());
-        choice = null;
+    // Verifica a etapa atual do processo
+    if (currentStep === 'start') {
+        // Define a resposta da mensagem de introdução
+        msg.body("Olá, eu sou uma assistente virtual e estou aqui para te ajudar. Por favor, digite o seu Nome:");
+        // Atualiza a etapa atual para 'get_name'
+        currentStep = 'get_name';
+    } else if (currentStep === 'get_name') {
+        // Armazena o nome coletado no objeto 'collectedData'
+        collectedData.name = userInput;
+        // Define a resposta da mensagem para prosseguir com a coleta
+        msg.body(`Olá, ${collectedData.name}! Agora, digite o seu CPF:`);
+        // Atualiza a etapa atual para 'get_cpf'
+        currentStep = 'get_cpf';
+    } else if (currentStep === 'get_cpf') {
+        // Armazena o CPF coletado no objeto 'collectedData'
+        collectedData.cpf = userInput;
+        // Define a resposta da mensagem para prosseguir com a coleta
+        msg.body(`Ótimo! Agora, digite o seu CEP:`);
+        // Atualiza a etapa atual para 'get_cep'
+        currentStep = 'get_cep';
+    } else if (currentStep === 'get_cep') {
+        // Armazena o CEP coletado no objeto 'collectedData'
+        collectedData.cep = userInput;
+        // Define a resposta da mensagem para mostrar os dados coletados
+        msg.body(`Obrigado por fornecer as informações!\nNome: ${collectedData.name}\nCPF: ${collectedData.cpf}\nCEP: ${collectedData.cep}`);
+        // Atualiza a etapa atual para 'completed'
+        currentStep = 'completed';
     } else {
-        msg.body("Olá, eu sou uma assistente virtual e estou aqui para te ajudar. Deseja continuar? \n1-sim. \n2- Não");
-        res.send(response.toString())
-        console.log(choice)
+        // Responde caso nenhuma etapa coincida (entrada inválida)
+        msg.body("Não entendi a sua resposta. Por favor, siga as instruções.");
     }
 
+    // Envia a resposta de volta ao cliente
+    res.send(response.toString());
 }
 
-exports.Info = choices, async (req, res) => {
-    const response = new MessagingResponse();
-    const msg = response.message();
-    const message = req.body.Body
-    msg.body("Funcionou!");
-    console.log(message);
-    res.send(response.toString());
-};
+// Exporta a função 'handleMessages' para uso externo
+exports.handleMessages = handleMessages;
