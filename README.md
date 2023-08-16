@@ -32,4 +32,4 @@ $ npm run start
 
 Feito com ❤️ por Douglas Gabriel 👋🏽
 
-[![Linkedin Badge](https://img.shields.io/badge/-Thiago-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tgmarinho/)](https://www.linkedin.com/in/douglas-gabriel-pereira-salgado-720b19175/)
+[![Linkedin Badge](https://img.shields.io/badge/-Douglas-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/douglas-gabriel-pereira-salgado-720b19175/)](https://www.linkedin.com/in/douglas-gabriel-pereira-salgado-720b19175/)
