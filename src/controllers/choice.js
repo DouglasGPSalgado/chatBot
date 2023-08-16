@@ -27,10 +27,15 @@ function handleMessages(req, res) {
         msg.body(`Olá, ${collectedData.name}! Agora, digite o seu CPF:`);
         currentStep = 'get_cpf';
     } else if (currentStep === 'get_cpf') {
-        // Se a etapa atual for 'get_cpf', armazena o CPF fornecido pelo usuário e pede o CEP
-        collectedData.cpf = userInput;
-        msg.body(`Ótimo! Agora, digite o seu CEP:`);
-        currentStep = 'get_cep';
+        // Se a etapa atual for 'get_cpf', verifica se o CPF tem exatamente 11 caracteres
+        if (userInput.length === 11) {
+            // Armazena o CPF fornecido pelo usuário e pede o CEP
+            collectedData.cpf = userInput;
+            msg.body(`Ótimo! Agora, digite o seu CEP:`);
+            currentStep = 'get_cep';
+        } else {
+            msg.body("CPF inválido. Certifique-se de digitar 11 caracteres numéricos para o CPF.");
+        }
     } else if (currentStep === 'get_cep') {
         // Se a etapa atual for 'get_cep', armazena o CEP fornecido pelo usuário e faz uma solicitação à API ViaCEP para obter informações de endereço
         collectedData.cep = userInput;
