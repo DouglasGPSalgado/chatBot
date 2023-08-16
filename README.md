@@ -20,6 +20,11 @@ $ npm install
 $ npm run start
 
 # O servidor inciará na porta:3000 - acesse <http://localhost:3000>
+
+# Para fazer o teste usando o numero de teste da Twilio acesse o numero abaixo e envie a mensagem descrita abaixo:
+$ +14155238886
+$ join whatever-eventually
+
 ```
 
 ### Autor
